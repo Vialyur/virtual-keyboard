@@ -1,9 +1,9 @@
-let arrayCharCode = [
-    '96', '49', '50', '51', '52', '53', '54', '55', '56', '57', '48', '45', '61', 'BackSpace',
-    'Tab', '113', '119', '101', '114', '116', '121', '117', '105', '111', '112', '91', '93', '92', 'Del',
-    'Caps Lock', '97', '115', '100', '102', '103', '104', '106', '107', '108', '59', '39', 'Enter',
-    'Shift', '122', '120', '99', '118', '98', '110', '109', '44', '46', '47', 'Shift ',
-    'Ctrl', 'Fn', 'Alt', 'Space', 'Alt', 'Ctrl'
+let arrayCodeOfKey = [
+    "Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace",
+    "Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI", "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash", "Delete",
+    "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ", "KeyK", "KeyL", "Semicolon", "Quote", "Enter",
+    "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight",
+    "ControlLeft", "Fn", "AltLeft", "Space", "AltRight", "ControlRight"
 
 ];
 
@@ -94,7 +94,7 @@ function createKeyboard (tempArray) {
         keyButton = document.createElement('button');
         keyButton.setAttribute('type', 'button');
         keyButton.classList.add('key');
-        keyButton.setAttribute('data', arrayCharCode[i]);
+        keyButton.setAttribute('data', arrayCodeOfKey[i]);
         keyboardDiv.append(keyButton);
         keyButton.innerHTML = tempArray[i];
 
@@ -181,17 +181,34 @@ function createKeyboard (tempArray) {
 
             
         }
+
     }  
 
 };
 
-document.body.addEventListener('keydown', (event) => {
-    
-    document.querySelector('.key[data = "' + event.keyCode + '"]').classList.add('active');
-    }
-);
+document.addEventListener('keydown', (event) => {
+    document.querySelector(`.key[data = '${event.code}']`).classList.add('active');
+});
+
+document.addEventListener('keyup', (event) => {
+    document.querySelector(`.key[data = '${event.code}']`).classList.remove('active');
+});
+
+document.addEventListener('mousedown', (event) => {
+    if(event.target.type === 'button')
+    {event.target.classList.add('active')};
+});
+
+document.addEventListener('mouseup', (event) => {
+    event.target.classList.remove('active');
+});
 
 
-
+/*let arr1 = [];
+document.addEventListener('keyup', (event) => {
+    console.log(event.code);
+    arr1.push(event.code);
+    console.log(arr1);})
+*/
 
 
