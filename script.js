@@ -219,11 +219,5 @@ document.addEventListener('mouseover', () => {
 document.addEventListener('mouseout', () => {
     if(event.target.type === 'button') {event.target.classList.remove('keyBacklight')};
 });
-/*let arr1 = [];
-document.addEventListener('keyup', (event) => {
-    console.log(event.code);
-    arr1.push(event.code);
-    console.log(arr1);})
-*/
 
 
