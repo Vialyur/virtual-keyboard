@@ -12,7 +12,7 @@ const arrayEnKey = [
     "Tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "&#92", "Del",
     "Caps Lock", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter",
     "Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "Shift ",
-    "Ctrl", "En", "Alt", "Space", "Alt", "Ctrl"        
+    "Ctrl", "Lang", "Alt", "Space", "Alt", "Ctrl"        
     ];
 
 const arrayShiftEnKey = [
@@ -42,14 +42,13 @@ const arrayShiftKey = [
 
 let textAreaProperties = {
     value: "",
-    capsLock: false,
+    capsLock: true,
     shift: false,
-    lang: 'ru'
+    
 };
 
-let textInputArea;
-let mainDiv;
-let keyboardDiv;
+localStorage.lang = 'ru';
+localStorage.capsLock = 'false';
 
 function init() {
         
@@ -73,20 +72,30 @@ function init() {
         keyboardDiv.className = 'keys';
         mainDiv.append(keyboardDiv);
 
-        
-        if(textAreaProperties.lang === 'ru' && textAreaProperties.capsLock === false) {
-            createKeyboard(arrayKey);
-        } else if(textAreaProperties.lang === 'ru' && textAreaProperties.capsLock === true){
-            createKeyboard(arrayShiftKey);
-        } else if (textAreaProperties.lang === 'en' && textAreaProperties.capsLock === false) {
-            createKeyboard(arrayEnKey);
-        } else if(textAreaProperties.lang === 'en' && textAreaProperties.capsLock === true){
-            createKeyboard(arrayShiftEnKey);
-        }
+        changeLang();
 
 };
 
 init();
+
+function changeLang() {
+    let capsLock = textAreaProperties.capsLock;
+        if(localStorage.lang === 'ru' && localStorage.capsLock === 'false') {
+            createKeyboard(arrayKey);
+        } else if(localStorage.lang === 'ru' && localStorage.capsLock === 'true'){
+            createKeyboard(arrayShiftKey);
+        } else if (localStorage.lang === 'en' && localStorage.capsLock === 'false') {
+            createKeyboard(arrayEnKey);
+        } else if(localStorage.lang === 'en' && localStorage.capsLock === 'true'){
+            createKeyboard(arrayShiftEnKey);
+}}
+
+function removeKeyboard() {
+    let keys = document.querySelectorAll('.key');
+    [...keys].forEach(el => el.remove());
+    let brs = document.querySelectorAll('br');
+    [...brs].forEach(el => el.remove());
+}
 
 function createKeyboard (tempArray) {
     for (let i = 0; i < tempArray.length; i++) {
@@ -122,8 +131,10 @@ function createKeyboard (tempArray) {
             case 'Caps Lock':
                 keyButton.classList.add('capslock', 'darkerColorKey');
                 keyButton.addEventListener('click', () => {
-                    textAreaProperties.capslock === false ? textAreaProperties.capslock = true : textAreaProperties.capslock = false;
-                    
+                    localStorage.capsLock === 'false' ? localStorage.capsLock = 'true' : localStorage.capsLock = 'false';
+                    removeKeyboard();
+                    changeLang();
+                    console.log(localStorage.capsLock)                    
                 });
 
                 break;
@@ -166,17 +177,16 @@ function createKeyboard (tempArray) {
                 break;
 
             case 'Lang':
-                    console.log(textAreaProperties.lang);
                 keyButton.classList.add('darkerColorKey');
                 keyButton.addEventListener('click', () => {
-                    textAreaProperties.lang === 'ru' ? textAreaProperties.lang = 'en' : textAreaProperties.lang = 'ru';
+                    localStorage.lang === 'ru' ? localStorage.lang = 'en' : localStorage.lang = 'ru';
+                    removeKeyboard();
+                    changeLang();
                     });
-                    console.log(textAreaProperties.lang)
                 break;
             default :
                 keyButton.addEventListener('click', (event) => {
                     textInputArea.value += event.target.textContent;
-                    
             });
 
             
