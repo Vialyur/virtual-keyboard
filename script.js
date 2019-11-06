@@ -197,23 +197,28 @@ function createKeyboard (tempArray) {
 };
 
 document.addEventListener('keydown', (event) => {
-    document.querySelector(`.key[data = '${event.code}']`).classList.add('active');
+    document.querySelector(`.key[data = '${event.code}']`).classList.add('keyPress');
 });
 
 document.addEventListener('keyup', (event) => {
-    document.querySelector(`.key[data = '${event.code}']`).classList.remove('active');
+    document.querySelector(`.key[data = '${event.code}']`).classList.remove('keyPress');
 });
 
 document.addEventListener('mousedown', (event) => {
     if(event.target.type === 'button')
-    {event.target.classList.add('active')};
+    {event.target.classList.add('keyPress')};
 });
 
 document.addEventListener('mouseup', (event) => {
-    event.target.classList.remove('active');
+    event.target.classList.remove('keyPress');
 });
 
-
+document.addEventListener('mouseover', () => {
+    if(event.target.type === 'button') {event.target.classList.add('keyBacklight')};
+});
+document.addEventListener('mouseout', () => {
+    if(event.target.type === 'button') {event.target.classList.remove('keyBacklight')};
+});
 /*let arr1 = [];
 document.addEventListener('keyup', (event) => {
     console.log(event.code);
