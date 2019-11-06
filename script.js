@@ -40,15 +40,12 @@ const arrayShiftKey = [
     ];
     
 
-let textAreaProperties = {
-    value: "",
-    capsLock: true,
-    shift: false,
-    
-};
 
-localStorage.lang = 'ru';
+
+localStorage.lang = (localStorage.lang.length === 0) ? 'ru' : localStorage.lang;
 localStorage.capsLock = 'false';
+
+
 
 function init() {
         
@@ -79,7 +76,7 @@ function init() {
 init();
 
 function changeLang() {
-    let capsLock = textAreaProperties.capsLock;
+ 
         if(localStorage.lang === 'ru' && localStorage.capsLock === 'false') {
             createKeyboard(arrayKey);
         } else if(localStorage.lang === 'ru' && localStorage.capsLock === 'true'){
@@ -98,6 +95,7 @@ function removeKeyboard() {
 }
 
 function createKeyboard (tempArray) {
+    
     for (let i = 0; i < tempArray.length; i++) {
         
         keyButton = document.createElement('button');
@@ -124,7 +122,7 @@ function createKeyboard (tempArray) {
             case 'Tab':
                 keyButton.classList.add('tab', 'darkerColorKey');
                 keyButton.addEventListener('click', (event) => {
-                    textInputArea.value += '\t';
+                    textInputArea.value += '    ';
                     });
                 break;
 
@@ -150,7 +148,7 @@ function createKeyboard (tempArray) {
                 keyButton.classList.add('shift', 'darkerColorKey');
                 break;
 
-            case ('Shift '):
+                case ('Shift '):
                 keyButton.classList.add('shift', 'darkerColorKey');
                 break;
 
@@ -184,20 +182,22 @@ function createKeyboard (tempArray) {
                     changeLang();
                     });
                 break;
+                
             default :
                 keyButton.addEventListener('click', (event) => {
                     textInputArea.value += event.target.textContent;
             });
 
-            
         }
-
+        
     }  
 
 };
 
 document.addEventListener('keydown', (event) => {
-    document.querySelector(`.key[data = '${event.code}']`).classList.add('keyPress');
+    let elem = document.querySelector(`.key[data = '${event.code}']`);
+    elem.classList.add('keyPress');
+    document.getElementsByTagName('textarea').focus();
 });
 
 document.addEventListener('keyup', (event) => {
