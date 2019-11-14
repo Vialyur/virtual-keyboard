@@ -90,7 +90,22 @@ textarea {
      width: 6%;
  }
 
- .active {
-     color: black;
-     background-color: brown;
+ .keyPress {
+     background-color: rgb(35, 235, 35);
+     animation: radial-pulse 1s infinite;
+     border: rgb(8, 40, 224) 2px solid;
+ }
+
+ @keyframes radial-pulse {   0% {
+        box-shadow: 0 0 20px  rgb(35, 235, 35);
+      }
+     
+    40% {
+        box-shadow: 0 0 0 40px rgba(100, 245, 4, 0);
+      }
+    }
+
+ 
+ .keyBacklight {
+     border: 3px solid rgb(35, 235, 35);
  }
