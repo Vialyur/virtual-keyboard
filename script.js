@@ -51,6 +51,7 @@ function init() {
         
 
         textInputArea = document.createElement('textarea');
+        textInputArea.classList.add('textarea');
         textInputArea.setAttribute('placeholder', 'Enter your text here...');
         textInputArea.setAttribute('capsLock', 'false');
         textInputArea.setAttribute('shift', 'false');
@@ -195,9 +196,12 @@ function createKeyboard (tempArray) {
 };
 
 document.addEventListener('keydown', (event) => {
-    let elem = document.querySelector(`.key[data = '${event.code}']`);
+    let elem = document.querySelector(`.key[data = ${event.code}]`);
     elem.classList.add('keyPress');
-    document.getElementsByTagName('textarea').focus();
+    let textarea = document.getElementsByClassName('textarea');
+    
+    textarea.value += elem.textContent;
+    console.log(elem.textContent)
 });
 
 document.addEventListener('keyup', (event) => {
